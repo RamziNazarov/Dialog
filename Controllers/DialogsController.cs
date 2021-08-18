@@ -15,7 +15,7 @@ namespace Dialogs.Controllers
         {
             var rgDialogId = Guid.Empty;
 
-            if (idClients == null)
+            if (idClients == null || idClients.Count == 0)
                 return rgDialogId;
             
             var rgDialogsClientsList = new RGDialogsClients().Init();
