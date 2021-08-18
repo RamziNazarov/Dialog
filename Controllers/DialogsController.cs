@@ -11,8 +11,13 @@ namespace Dialogs.Controllers
     public class DialogsController : ControllerBase
     {
         [HttpGet]
-        public Guid SearchClientsDialogId([FromQuery]List<Guid> idClients)
+        public Guid SearchDialog([FromQuery]List<Guid> idClients)
         {
+            var rgDialogId = Guid.Empty;
+
+            if (idClients == null)
+                return rgDialogId;
+            
             var rgDialogsClientsList = new RGDialogsClients().Init();
             
             var rgDialogsClientsDictionary = rgDialogsClientsList
@@ -27,7 +32,7 @@ namespace Dialogs.Controllers
                     .Where(rgDialogClient => rgDialogClient.IDRGDialog == dialog)
                     .Select(rgDialogClient => rgDialogClient.IDClient));
             
-            var rgDialogId = rgDialogsClientsDictionary
+            rgDialogId = rgDialogsClientsDictionary
                 //поиск того диалога у которого список клиентов совпадает со списком принятным в параметре метода
                 .Where(dialogWithClients => 
                     //сравнение, присутствуют ли все элементы из принятого в параметрах метода списка в список клиентов диалога
